@@ -1,7 +1,20 @@
-// Las prop que se pasan desde el componenete padre "App.jsx" son "userName, name, isFollowing"
-export default function FollowCard({userName, name, isFollowing}) {
+import { useState } from 'react';
 
-  console.log(isFollowing);
+// Las prop que se pasan desde el componenete padre "App.jsx" son "userName, name, isFollowing"
+export default function FollowCard({userName, name, initialIsFollowing}) {
+
+  const [isFollowing, setIsFollowing] = useState(!initialIsFollowing)
+
+  const text = isFollowing ? 'Siguiendo' : 'Seguir'
+
+  const bottonClassName = isFollowing ? 
+    'tw-followCard-button is-following' :
+    'tw-followCard-button'
+
+  const handleClick = () => {
+    setIsFollowing(!isFollowing)
+  }
+
     return (
       <>
         <article className='tw-followCard'>
@@ -18,8 +31,9 @@ export default function FollowCard({userName, name, isFollowing}) {
           </header>
 
           <aside>
-            <button className="tw-followCard-button">
-              Seguir
+            <button className={bottonClassName} onClick={handleClick}>
+              <span className='tw-followCard-text'>{text}</span>
+              <span className='tw-followCard-stopFollow'>Dejar de seguir</span>
             </button>
           </aside>
         </article>
